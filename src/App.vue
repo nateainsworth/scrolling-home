@@ -19,6 +19,7 @@ import { ref,nextTick } from 'vue'
   const draggable = ref('');
   const pagecont = ref('');
   const pageTrigger = ref([]);
+  const activePage = ref('page1');
 
 isDragging.value = true;
    const draggablePosition = () => {
@@ -58,21 +59,21 @@ console.log( dragItemCoords.value.top + 'px');
         console.log('mouse up triggered');
         //console.log('off set =  ',page1.value.offsetTop);
         if( pageTrigger.value[0] > pagecont.value.scrollTop){
-          console.log("page 1");
+          activePage.value ="page1";
           console.log(pageTrigger.value[0] , '  :  ', pagecont.value.scrollTop)
           nextTick(() => {
             jumpToPage = page1.value.offsetTop;
             pagecont.value.scrollTop = jumpToPage;
           });
         }else if (pageTrigger.value[1] < pagecont.value.scrollTop && pageTrigger.value[2] > pagecont.value.scrollTop){
-          console.log("page 2");
+           activePage.value = "page2";
           nextTick(() => {
             jumpToPage = page2.value.offsetTop;
             pagecont.value.scrollTop = jumpToPage;
           });
           console.log(pageTrigger.value[0] , '  :  ', pagecont.value.scrollTop)
         }else if(pageTrigger.value[2] < pagecont.value.scrollTop){
-          console.log("page 3");
+          activePage.value ="page3";
           nextTick(() => {
             jumpToPage = page3.value.offsetTop;
             pagecont.value.scrollTop = jumpToPage;
@@ -96,7 +97,10 @@ console.log( dragItemCoords.value.top + 'px');
         e.preventDefault();
         if (e.target === draggable.value) {
           isDragging.value = true;  
-          /*draggable.addEventListener("mouseup", handleMouseUp(), { passive =  true }); */
+          const position = findPositionInsideBound(e);
+          dragItemCoords.value = {left: position.x, top: position.y };
+          const percentage =  draggable.value.clientHeight / 100 * (position.y);
+          pagecont.value.scrollTop = pagecont.value.scrollHeight / 100 * percentage;
         }
       }
 
@@ -145,7 +149,7 @@ console.log( dragItemCoords.value.top + 'px');
            :class="{'grabbing': isDragging}"></div>    <!--  :style="draggablePosition" -->
     </div>
     <div ref="pagecont" class="page-container" >
-      <div ref="page1" class='page-box' style="background:green;" :class="{'drag-view': isDragging}, {'fixed-view': !isDragging}">
+      <div ref="page1" class='page-box' style="background:green;" :class="{'drag-view': isDragging}, {'fixed-view': !isDragging}" v-if="activePage == 'page1' || isDragging">
         <div class='page-main' style="background:green;" :class="{'drag-view': isDragging}"><h1>Title</h1></div>
         <div class="page-contents" v-if="!isDragging">
           <h2>
@@ -153,8 +157,8 @@ console.log( dragItemCoords.value.top + 'px');
           </h2>
           </div>
       </div>
-      <div ref="page2" class='page-box' style="background:purple;" :class="{'drag-view': isDragging}"></div>
-      <div ref="page3" class='page-box' style="background:red;" :class="{'drag-view': isDragging}"></div>
+      <div ref="page2" class='page-box' style="background:purple;" :class="{'drag-view': isDragging}" v-if="activePage == 'page2' || isDragging"></div>
+      <div ref="page3" class='page-box' style="background:red;" :class="{'drag-view': isDragging}" v-if="activePage == 'page3' || isDragging"></div>
       <div class='page-box whitespace'></div>
     </div>
   </div>
