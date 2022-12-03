@@ -20,6 +20,7 @@ import { ref,nextTick } from 'vue'
   const pagecont = ref('');
   const pageTrigger = ref([]);
   const activePage = ref('page1');
+  const lastPercentage = ref(0);
 
 isDragging.value = true;
    const draggablePosition = () => {
@@ -93,14 +94,14 @@ console.log( dragItemCoords.value.top + 'px');
         return clampInsideBoundary(x, y);
       }
 
-      const handleMouseDown = (e) => {
+      const handleMouseDown = async (e) => {
         e.preventDefault();
         if (e.target === draggable.value) {
           isDragging.value = true;  
-          const position = findPositionInsideBound(e);
-          dragItemCoords.value = {left: position.x, top: position.y };
-          const percentage =  draggable.value.clientHeight / 100 * (position.y);
-          pagecont.value.scrollTop = pagecont.value.scrollHeight / 100 * percentage;
+          await nextTick (() =>{
+            pagecont.value.scrollTop = lastPercentage.value;
+          });
+          
         }
       }
 
@@ -116,6 +117,7 @@ console.log( dragItemCoords.value.top + 'px');
           //console.log( percentage , '%');
           //console.log(pagecont.scrollTop / 100 * percentage);
           pagecont.value.scrollTop = pagecont.value.scrollHeight / 100 * percentage;//pagecont.scrollTop + position.y;
+          lastPercentage.value = pagecont.value.scrollTop;
         }
       }
       
