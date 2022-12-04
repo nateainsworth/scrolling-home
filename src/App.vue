@@ -46,7 +46,6 @@ import HallamChat from './components/HallamChat.vue'
       let triggers = [];
 
       for(const page in pages.value){
-        console.log(page)
         if(page == 0){
           triggers.push({
             start: -100,
@@ -66,8 +65,8 @@ import HallamChat from './components/HallamChat.vue'
       }
 
       for(const trigger in triggers){
-        console.log(trigger);
-        console.log(triggers[trigger]);
+        //console.log(trigger);
+        //console.log(triggers[trigger]);
         if (triggers[trigger].start < pagecont.value.scrollTop && triggers[trigger].end > pagecont.value.scrollTop){
           activePage.value = "page" + trigger;
           jumpToPage = pages.value[trigger].page.offsetTop;
