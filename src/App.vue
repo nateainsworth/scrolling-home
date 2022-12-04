@@ -18,7 +18,7 @@ class page {
 
   const pages = ref([]);
   const titles = ref([]);
-  const clamp = (num, lower = 0, upper) => {
+  const lock = (num, lower = 0, upper) => {
     return num < lower ? lower : num > upper ? upper : num;
   }; 
   
@@ -28,10 +28,7 @@ class page {
   const message =  ref('Hello World');
   const isDragging = ref(false);
   const dragItemTop = ref('0px')
-  const dragItemCoords = ref({
-        top: 5,
-        left:  5,
-      });
+ 
   const boundary = ref('');
   const draggable = ref('');
   const pagecont = ref('');
@@ -40,27 +37,13 @@ class page {
   const lastPercentage = ref(0);
   const scrollHeight = ref(0);
 
-onMounted(() => {
-  console.log(pages.value);
-  console.log(pages.value[0].page);
-})
-
-   const draggablePosition = () => {
-        console.log(dragItemCoords.value.top);
-console.log( dragItemCoords.value.top + 'px');
-        return {
-          top:  dragItemCoords.value.top + 'px',
-          left:  dragItemCoords.value.left + 'px'
-        };
-    }
-
-    const clampInsideBoundary = (x:any, y:any)  => {
+    const lockToBoundary = (x:any, y:any)  => {
         const boundaryPos = boundary.value.getBoundingClientRect();
         const maxHeight = boundaryPos.height - draggable.value.clientHeight;
 
         return {
           x :  0,
-          y :  clamp(y - boundaryPos.y, 0, maxHeight), 
+          y :  lock(y - boundaryPos.y, 0, maxHeight), 
         };
     }
 
@@ -74,8 +57,8 @@ console.log( dragItemCoords.value.top + 'px');
             console.log(page)
             if(page == 0){
               triggers.push({
-                start: 0,
-                end: pages.value[( +page + 1)].page.offsetTop - pages.value[( +page + 1)].page.clientHeight /3,//pages.value[1].page.offsetTop/1.5,
+                start: -100,
+                end: pages.value[( +page + 1)].page.offsetTop - pages.value[( +page + 1)].page.clientHeight /3,
               })
             }else if(page == (pages.value.length - 1)){
               triggers.push({
@@ -114,7 +97,7 @@ console.log( dragItemCoords.value.top + 'px');
         const x = e.clientX - (draggable.value.clientWidth/2);
         const y = e.clientY - (draggable.value.clientHeight/2); 
         
-        return clampInsideBoundary(x, y);
+        return lockToBoundary(x, y);
       }
 
       const handleMouseDown = async (e) => {
@@ -133,8 +116,7 @@ console.log( dragItemCoords.value.top + 'px');
         
         if (isDragging.value) {
           const position = findPositionInsideBound(e);
-          
-          dragItemCoords.value = {left: position.x, top: position.y };
+
           dragItemTop.value = position.y + 'px';
 
           const percentage =  ( position.y / (boundary.value.clientHeight - draggable.value.clientHeight)) * 100;
@@ -144,9 +126,7 @@ console.log( dragItemCoords.value.top + 'px');
         }
       }
       
-      const handleMouseLeave = (e) => {
-
-        //canvas.upperCanvasEl.dispatchEvent(evt);
+      const handleMouseLeave = () => {
         
         if (isDragging.value) {     
           var evt = new MouseEvent("mouseup", () => {
@@ -162,12 +142,11 @@ console.log( dragItemCoords.value.top + 'px');
 </script>
 
 <template>
- <div @mouseup="handleMouseUp" @mousemove="handleMouseMove($event)" >
+ <div @mouseup="handleMouseUp" @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()" >
   <div>
     <div ref="boundary"
          class="boundary-box" 
-         @mousedown="handleMouseDown($event)" 
-       
+         @mousedown="handleMouseDown($event)"
     >
     <div ref="draggable"
            class="drag-handle"
@@ -208,7 +187,7 @@ console.log( dragItemCoords.value.top + 'px');
 
 }
 
-.drag-handle.hint::after{
+.drag-handle.hint:hover::after{
   content:"\2190  Drag Me";
   position: absolute;
   top: calc(50% - 13px);
