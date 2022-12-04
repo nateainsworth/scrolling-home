@@ -32,7 +32,7 @@ defineExpose({
           cols="12"
           style="text-align:left;"
         >
-        <h2>Intro</h2>
+        <h2>Final Year Project</h2>
         <hr/>
         </v-col>
         <v-col

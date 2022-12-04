@@ -17,8 +17,8 @@ defineExpose({
   <div ref="page" class='page-box' :class="{'drag-view': props.isDragging}" v-if="props.activePage == props.pageName || props.isDragging">
     <div class='page-main'>
       <div class="title-area">
-        <h2>Nate Ainsworth</h2>
-        <p>Polyglot engineer</p>
+        <h1>Nate Ainsworth</h1>
+        <h3>Polyglot engineer</h3>
       </div>
     </div>
     <div class="page-contents" v-if="!props.isDragging">
@@ -82,6 +82,7 @@ defineExpose({
   top:0;
   left:0;
   background: url('https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1631&q=80') left;
+  background-size:cover;
   z-index:10;
   filter: brightness(0.6);
 }

@@ -11,8 +11,8 @@ import HallamChat from './components/HallamChat.vue'
 
 
 
-
-  const pageComponents = [Home,Rcadia,Attendance,HallamChat,VrUnity,VrUnreal,Ouioui,FinalProject];
+//,HallamChat
+  const pageComponents = [Home,Rcadia,Attendance,VrUnity,VrUnreal,Ouioui,FinalProject];
 
   const pages = ref([]);
   const titles = ref([]);

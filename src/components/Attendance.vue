@@ -32,7 +32,7 @@ defineExpose({
           cols="12"
           style="text-align:left;"
         >
-        <h2>Intro</h2>
+        <h2>SAAD Attendance</h2>
         <hr/>
         </v-col>
         <v-col
@@ -81,7 +81,9 @@ defineExpose({
   position:absolute;
   top:0;
   left:0;
-  background: url('https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1631&q=80') left;
+  background: url('https://github.com/nateainsworth/scrolling-home/blob/main/src/assets/Saad%20Analytics.png?raw=true') left;
+  background-size: cover;
+
   z-index:10;
   filter: brightness(0.6);
 }

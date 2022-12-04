@@ -32,7 +32,7 @@ defineExpose({
           cols="12"
           style="text-align:left;"
         >
-        <h2>Intro</h2>
+        <h2>Rcadia Social Network</h2>
         <hr/>
         </v-col>
         <v-col
@@ -81,7 +81,8 @@ defineExpose({
   position:absolute;
   top:0;
   left:0;
-  background: url('./assets/Rcadia%20Login.png');
+  background: url('https://github.com/nateainsworth/scrolling-home/blob/main/src/assets/Rcadia%20Login.png?raw=true');
+  background-size: cover;
   z-index:10;
   filter: brightness(0.6);
 }
