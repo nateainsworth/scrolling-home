@@ -132,12 +132,19 @@ console.log( dragItemCoords.value.top + 'px');
           
           dragItemCoords.value = {left: position.x, top: position.y };
           //console.log(dragItemCoords.value)
-          dragItemTop.value = position.y +'px';
-          const percentage =  draggable.value.clientHeight / 100 * (position.y);
-          //console.log( percentage , '%');
+          dragItemTop.value = position.y + 'px';
+          //const dragpercent = (draggable.value.clientHeight / 100) * position.y;
+          //console.log(position.y);
+          //console.log(boundary.value.clientHeight)
+          // console.log(( position.y / boundary.value.clientHeight) + ' : ' + ( position.y / boundary.value.clientHeight) * 100);
+          const percentage =  ( position.y / boundary.value.clientHeight) * 100;
+         // console.log( percentage , '%');
           //console.log(pagecont.scrollTop / 100 * percentage);
-          pagecont.value.scrollTop = pagecont.value.scrollHeight / 100 * percentage;//pagecont.scrollTop + position.y;
+          pagecont.value.scrollTop = pagecont.value.scrollHeight / 100 * percentage;
+          console.log( pagecont.value.scrollHeight + ' : ' + pagecont.value.scrollTop);
+          //pagecont.value.scrollHeight / 100 * percentage;//pagecont.scrollTop + position.y;
           lastPercentage.value = pagecont.value.scrollTop;
+         
         }
       }
       
@@ -168,16 +175,10 @@ console.log( dragItemCoords.value.top + 'px');
     >
     <div ref="draggable"
            class="drag-handle"
-           :class="{'grabbing': isDragging},{'hint': lastPercentage < '70'}"></div>    <!--  :style="draggablePosition" -->
+           :class="{'grabbing': isDragging},{'hint': lastPercentage < '70'}"></div>
     </div>
     <div ref="pagecont" class="page-container" >
       <component v-for="component in pageComponents" :is="component" ref="pages" :isDragging="isDragging" :activePage="activePage"></component>
-
-<!--
-      <div ref="page1" class='page-box' style="background:green;" :class="{'drag-view': isDragging}" v-if="activePage == 'page1' || isDragging"></div>
-      <h3 v-if="isDragging">Placement</h3>
-      <div ref="page2" class='page-box' style="background:purple;" :class="{'drag-view': isDragging}" v-if="activePage == 'page2' || isDragging"></div>
-      <div ref="page3" class='page-box' style="background:red;" :class="{'drag-view': isDragging}" v-if="activePage == 'page3' || isDragging"></div>-->
     </div>
   </div>
 
@@ -192,6 +193,7 @@ console.log( dragItemCoords.value.top + 'px');
   width: 120px;
   height: 50vh;
   pointer-events: none; 
+  border: solid 2px black;
 }
 
 .drag-handle{

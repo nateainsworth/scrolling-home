@@ -40,11 +40,9 @@ defineExpose({
     }
 
   .drag-view{
-    margin-top:10px;
     width:90vw;
-    margin-top:10px;
     overflow:hidden;
-    margin: 5vw;
+    /*margin: 5vw;*/
     /*margin-top: 5vw;*/
   /* aspect-ratio: 16 / 9 !important;*/
   }
