@@ -4,17 +4,7 @@ import Home from './components/Home.vue'
 import Ouioui from './components/Ouioui.vue'
 import Rcadia from './components/Rcadia.vue'
 
-const pageComponents = [Home,Ouioui,Rcadia];
-
-// usage:
-class page {
-  constructor(pageval) {
-    this.pageval = ref(pageval);
-  }
-}
-
-
-
+  const pageComponents = [Home,Ouioui,Rcadia];
 
   const pages = ref([]);
   const titles = ref([]);
@@ -22,76 +12,64 @@ class page {
     return num < lower ? lower : num > upper ? upper : num;
   }; 
   
-  const page1 = ref('');
-  const page2 = ref('');
-  const page3 = ref('');
-  const message =  ref('Hello World');
   const isDragging = ref(false);
   const dragItemTop = ref('0px')
- 
   const boundary = ref('');
   const draggable = ref('');
   const pagecont = ref('');
   const pageTrigger = ref([]);
   const activePage = ref('page0');
   const lastPercentage = ref(0);
-  const scrollHeight = ref(0);
 
-    const lockToBoundary = (x:any, y:any)  => {
-        const boundaryPos = boundary.value.getBoundingClientRect();
-        const maxHeight = boundaryPos.height - draggable.value.clientHeight;
+  const lockToBoundary = (x:any, y:any)  => {
+      const boundaryPos = boundary.value.getBoundingClientRect();
+      const maxHeight = boundaryPos.height - draggable.value.clientHeight;
 
-        return {
-          x :  0,
-          y :  lock(y - boundaryPos.y, 0, maxHeight), 
-        };
-    }
+      return {
+        x :  0,
+        y :  lock(y - boundaryPos.y, 0, maxHeight), 
+      };
+  }
 
-    const handleMouseUp = () => {
-     if (isDragging.value) {
-        let jumpToPage = 0;
-        isDragging.value = false;
-        let triggers = [];
+  const handleMouseUp = () => {
+    if (isDragging.value) {
+      let jumpToPage = 0;
+      isDragging.value = false;
+      let triggers = [];
 
-          for(const page in pages.value){
-            console.log(page)
-            if(page == 0){
-              triggers.push({
-                start: -100,
-                end: pages.value[( +page + 1)].page.offsetTop - pages.value[( +page + 1)].page.clientHeight /3,
-              })
-            }else if(page == (pages.value.length - 1)){
-              triggers.push({
-                start: pages.value[page].page.offsetTop - pages.value[page].page.clientHeight /3,
-                end: pagecont.value.scrollHeight,
-              });
-            }else{
-              triggers.push({
-                start: pages.value[page].page.offsetTop - pages.value[page].page.clientHeight /3,
-                end:  pages.value[( +page + 1)].page.offsetTop - pages.value[( +page + 1)].page.clientHeight /3,
-              });
-            }
-          }
-
-
-          for(const trigger in triggers){
-            console.log(trigger);
-            console.log(triggers[trigger]);
-            if (triggers[trigger].start < pagecont.value.scrollTop && triggers[trigger].end > pagecont.value.scrollTop){
-              activePage.value = "page" + trigger;
-            
-            console.log(activePage.value);
-              console.log(pages.value[trigger].page.offsetTop);
-              jumpToPage = pages.value[trigger].page.offsetTop;
-              nextTick(() => {
-                pagecont.value.scrollTop = jumpToPage;
-              });
-              
-            }
-          }
-
+      for(const page in pages.value){
+        console.log(page)
+        if(page == 0){
+          triggers.push({
+            start: -100,
+            end: pages.value[( +page + 1)].page.offsetTop - pages.value[( +page + 1)].page.clientHeight /3,
+          })
+        }else if(page == (pages.value.length - 1)){
+          triggers.push({
+            start: pages.value[page].page.offsetTop - pages.value[page].page.clientHeight /3,
+            end: pagecont.value.scrollHeight,
+          });
+        }else{
+          triggers.push({
+            start: pages.value[page].page.offsetTop - pages.value[page].page.clientHeight /3,
+            end:  pages.value[( +page + 1)].page.offsetTop - pages.value[( +page + 1)].page.clientHeight /3,
+          });
         }
       }
+
+      for(const trigger in triggers){
+        console.log(trigger);
+        console.log(triggers[trigger]);
+        if (triggers[trigger].start < pagecont.value.scrollTop && triggers[trigger].end > pagecont.value.scrollTop){
+          activePage.value = "page" + trigger;
+          jumpToPage = pages.value[trigger].page.offsetTop;
+          pagecont.value.scrollTop = jumpToPage;
+          break;
+        }
+      }
+
+    }
+  }
     
       const findPositionInsideBound = (e) => {
         const x = e.clientX - (draggable.value.clientWidth/2);
@@ -150,7 +128,9 @@ class page {
     >
     <div ref="draggable"
            class="drag-handle"
-           :class="{'grabbing': isDragging},{'hint': lastPercentage < '70'}"></div>
+           :class="{'grabbing': isDragging},{'hint': lastPercentage < '70'}">
+           <i class="fa-solid fa-bars" style="color:"></i>
+           </div>
     </div>
     </div>
     <div>
@@ -178,13 +158,24 @@ class page {
   width:40px;
   height:40px;
   border-radius: 50%;
-  background-color:#ffffff;
+  background-color:rgba(255,255,255,0.7);
   top: v-bind('dragItemTop');
   position: absolute;
   cursor: -webkit-grab; 
   cursor: grab;
   pointer-events: auto;
+  display: flex;  
+  justify-content: center;
+  align-items: center;
 
+}
+.drag-handle:hover{
+    background-color:rgba(255,255,255,1);
+}
+
+.drag-handle svg{
+  pointer-events: none;
+  color: black;
 }
 
 .drag-handle.hint:hover::after{

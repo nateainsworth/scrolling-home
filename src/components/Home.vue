@@ -22,7 +22,10 @@ defineExpose({
 <template>
   <div ref="page" class='page-box' style="background:green;" :class="{'drag-view': props.isDragging}" v-if="props.activePage == props.pageName || props.isDragging">
     <div class='page-main' style="background:green;">
-      <h1>Title</h1>
+      <div class="title-area">
+        <h2>Nate Ainsworth</h2>
+        <p>Polyglot engineer</p>
+      </div>
     </div>
     <div class="page-contents" v-if="!props.isDragging">
           <h2>
@@ -60,5 +63,9 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .title-area{
+    text-align:left;
   }
 </style>
