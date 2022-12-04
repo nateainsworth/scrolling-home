@@ -3,8 +3,16 @@ import { ref,nextTick, onMounted } from 'vue'
 import Home from './components/Home.vue'
 import Ouioui from './components/Ouioui.vue'
 import Rcadia from './components/Rcadia.vue'
+import Attendance from './components/Attendance.vue'
+import VrUnity from './components/VrUnity.vue'
+import VrUnreal from './components/VrUnreal.vue'
+import FinalProject from './components/FinalProject.vue'
+import HallamChat from './components/HallamChat.vue'
 
-  const pageComponents = [Home,Ouioui,Rcadia];
+
+
+
+  const pageComponents = [Home,Rcadia,Attendance,HallamChat,VrUnity,VrUnreal,Ouioui,FinalProject];
 
   const pages = ref([]);
   const titles = ref([]);
@@ -135,7 +143,7 @@ import Rcadia from './components/Rcadia.vue'
     </div>
     <div>
     <div ref="pagecont" class="page-container" >
-      <component v-for="(component, index) in pageComponents" :is="component" ref="pages" :isDragging="isDragging" :activePage="activePage" :pageName="'page' + index"><div v-if="isDragging"><h2>Title</h2></div>
+      <component v-for="(component, index) in pageComponents" :is="component" ref="pages" :isDragging="isDragging" :activePage="activePage" :pageName="'page' + index"><div v-if="isDragging"><h2>Portfolio</h2></div>
       </component>
     </div>
   </div>
@@ -151,7 +159,7 @@ import Rcadia from './components/Rcadia.vue'
   width: 120px;
   height: 50vh;
   pointer-events: none; 
-
+  z-index:1000;
 }
 
 .drag-handle{

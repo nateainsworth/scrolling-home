@@ -17,8 +17,8 @@ defineExpose({
   <div ref="page" class='page-box' :class="{'drag-view': props.isDragging}" v-if="props.activePage == props.pageName || props.isDragging">
     <div class='page-main'>
       <div class="title-area">
-        <h2>Nate Ainsworth</h2>
-        <p>Polyglot engineer</p>
+        <h2>Hallam Chat</h2>
+        <p>Chat Application built in Java</p>
       </div>
     </div>
     <div class="page-contents" v-if="!props.isDragging">
