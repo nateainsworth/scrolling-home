@@ -1,19 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const props = defineProps({
   isDragging: Boolean,
-  activePage: String
+  activePage: String,
+  pageName:String,
 });
+
+
 
 const page = ref('');
 
+
+onMounted(() => {
+console.log('page is: ' , props.pageName);
+})
 defineExpose({
  page
 })
 </script>
 <template>
-  <div ref="page" class='page-box' style="background:green;" :class="{'drag-view': props.isDragging}" v-if="props.activePage == 'page1' || props.isDragging">
+  <div ref="page" class='page-box' style="background:green;" :class="{'drag-view': props.isDragging}" v-if="props.activePage == props.pageName || props.isDragging">
     <div class='page-main' style="background:green;">
       <h1>Title</h1>
     </div>
@@ -42,7 +49,7 @@ defineExpose({
   .drag-view{
     width:90vw;
     overflow:hidden;
-    /*margin: 5vw;*/
+    margin: 5vw;
     /*margin-top: 5vw;*/
   /* aspect-ratio: 16 / 9 !important;*/
   }

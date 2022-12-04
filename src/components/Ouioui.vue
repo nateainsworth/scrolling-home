@@ -3,7 +3,8 @@ import { ref } from 'vue'
 
 const props = defineProps({
   isDragging: Boolean,
-  activePage: String
+  activePage: String,
+  pageName:String,
 });
 
 const page = ref('');
@@ -13,7 +14,8 @@ defineExpose({
 })
 </script>
 <template>
-  <div ref="page" class='page-box' style="background:purple;" :class="{'drag-view': isDragging}" v-if="activePage == 'page2' || isDragging">
+  <slot></slot>
+  <div ref="page" class='page-box' style="background:purple;" :class="{'drag-view': isDragging}" v-if="activePage == props.pageName || isDragging">
     <h1>OuiOui</h1>
   </div>
 </template>
@@ -35,7 +37,7 @@ defineExpose({
   .drag-view{
     width:90vw;
     overflow:hidden;
-    /*margin: 5vw;*/
+    margin: 5vw;
     /*margin-top: 5vw;*/
   /* aspect-ratio: 16 / 9 !important;*/
   }

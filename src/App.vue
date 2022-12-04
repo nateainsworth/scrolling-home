@@ -4,7 +4,7 @@ import Home from './components/Home.vue'
 import Ouioui from './components/Ouioui.vue'
 import Rcadia from './components/Rcadia.vue'
 
-const pageComponents = {Home,Ouioui,Rcadia};
+const pageComponents = [Home,Ouioui,Rcadia];
 
 // usage:
 class page {
@@ -17,6 +17,7 @@ class page {
 
 
   const pages = ref([]);
+  const titles = ref([]);
   const clamp = (num, lower = 0, upper) => {
     return num < lower ? lower : num > upper ? upper : num;
   }; 
@@ -35,12 +36,13 @@ class page {
   const draggable = ref('');
   const pagecont = ref('');
   const pageTrigger = ref([]);
-  const activePage = ref('page1');
+  const activePage = ref('page0');
   const lastPercentage = ref(0);
+  const scrollHeight = ref(0);
 
 onMounted(() => {
- console.log(pages.value);
- console.log(pages.value[0].page);
+  console.log(pages.value);
+  console.log(pages.value[0].page);
 })
 
    const draggablePosition = () => {
@@ -54,7 +56,6 @@ console.log( dragItemCoords.value.top + 'px');
 
     const clampInsideBoundary = (x:any, y:any)  => {
         const boundaryPos = boundary.value.getBoundingClientRect();
-        //const maxWidth = boundaryPos.width - draggable.clientWidth;
         const maxHeight = boundaryPos.height - draggable.value.clientHeight;
 
         return {
@@ -67,43 +68,45 @@ console.log( dragItemCoords.value.top + 'px');
      if (isDragging.value) {
         let jumpToPage = 0;
         isDragging.value = false;
-        
-        //pageTrigger.value = [page2.value.offsetTop/1.5, page2.value.offsetTop - page2.value.clientHeight /3,page3.value.offsetTop - page3.value.clientHeight /3];
-        pageTrigger.value = [pages.value[1].page.offsetTop/1.5, pages.value[1].page.offsetTop - pages.value[1].page.clientHeight /3,pages.value[2].page.offsetTop - pages.value[2].page.clientHeight /3];
+        let triggers = [];
 
-        /*
-	this.pages = [this.$refs.page2.offsetTop/1.5,this.$refs.page2.offsetTop - this.$refs.page2.clientHeight /3,this.$refs.page3.offsetTop - this.$refs.page3.clientHeight /3];
-        */
+          for(const page in pages.value){
+            console.log(page)
+            if(page == 0){
+              triggers.push({
+                start: 0,
+                end: pages.value[( +page + 1)].page.offsetTop - pages.value[( +page + 1)].page.clientHeight /3,//pages.value[1].page.offsetTop/1.5,
+              })
+            }else if(page == (pages.value.length - 1)){
+              triggers.push({
+                start: pages.value[page].page.offsetTop - pages.value[page].page.clientHeight /3,
+                end: pagecont.value.scrollHeight,
+              });
+            }else{
+              triggers.push({
+                start: pages.value[page].page.offsetTop - pages.value[page].page.clientHeight /3,
+                end:  pages.value[( +page + 1)].page.offsetTop - pages.value[( +page + 1)].page.clientHeight /3,
+              });
+            }
+          }
 
-        console.log(pageTrigger);
-        
-        console.log('mouse up triggered');
-        //console.log('off set =  ',page1.value.offsetTop);
-        if( pageTrigger.value[0] > pagecont.value.scrollTop){
-          activePage.value ="page1";
-          console.log(pageTrigger.value[0] , '  :  ', pagecont.value.scrollTop)
-          nextTick(() => {
-            jumpToPage = pages.value[0].page.offsetTop;
-            pagecont.value.scrollTop = jumpToPage;
-          });
-        }else if (pageTrigger.value[1] < pagecont.value.scrollTop && pageTrigger.value[2] > pagecont.value.scrollTop){
-           activePage.value = "page2";
-          nextTick(() => {
-            jumpToPage = pages.value[1].page.offsetTop;
-            pagecont.value.scrollTop = jumpToPage;
-          });
-          console.log(pageTrigger.value[0] , '  :  ', pagecont.value.scrollTop)
-        }else if(pageTrigger.value[2] < pagecont.value.scrollTop){
-          activePage.value ="page3";
-          nextTick(() => {
-            jumpToPage = pages.value[2].page.offsetTop;
-            pagecont.value.scrollTop = jumpToPage;
-          });
-          console.log(page1.value , '  =  ', pagecont.value.scrollTop)
-        }
-        
-        console.log(pageTrigger.value[1] , '  =  ', pagecont.value.scrollTop)
-        
+
+          for(const trigger in triggers){
+            console.log(trigger);
+            console.log(triggers[trigger]);
+            if (triggers[trigger].start < pagecont.value.scrollTop && triggers[trigger].end > pagecont.value.scrollTop){
+              activePage.value = "page" + trigger;
+            
+            console.log(activePage.value);
+              console.log(pages.value[trigger].page.offsetTop);
+              jumpToPage = pages.value[trigger].page.offsetTop;
+              nextTick(() => {
+                pagecont.value.scrollTop = jumpToPage;
+              });
+              
+            }
+          }
+
         }
       }
     
@@ -118,6 +121,7 @@ console.log( dragItemCoords.value.top + 'px');
         e.preventDefault();
         if (e.target === draggable.value) {
           isDragging.value = true;  
+          
           await nextTick (() =>{
             pagecont.value.scrollTop = lastPercentage.value;
           });
@@ -131,18 +135,10 @@ console.log( dragItemCoords.value.top + 'px');
           const position = findPositionInsideBound(e);
           
           dragItemCoords.value = {left: position.x, top: position.y };
-          //console.log(dragItemCoords.value)
           dragItemTop.value = position.y + 'px';
-          //const dragpercent = (draggable.value.clientHeight / 100) * position.y;
-          //console.log(position.y);
-          //console.log(boundary.value.clientHeight)
-          // console.log(( position.y / boundary.value.clientHeight) + ' : ' + ( position.y / boundary.value.clientHeight) * 100);
-          const percentage =  ( position.y / boundary.value.clientHeight) * 100;
-         // console.log( percentage , '%');
-          //console.log(pagecont.scrollTop / 100 * percentage);
-          pagecont.value.scrollTop = pagecont.value.scrollHeight / 100 * percentage;
-          console.log( pagecont.value.scrollHeight + ' : ' + pagecont.value.scrollTop);
-          //pagecont.value.scrollHeight / 100 * percentage;//pagecont.scrollTop + position.y;
+
+          const percentage =  ( position.y / (boundary.value.clientHeight - draggable.value.clientHeight)) * 100;
+          pagecont.value.scrollTop = (pagecont.value.scrollHeight - pagecont.value.clientHeight) / 100 * percentage;
           lastPercentage.value = pagecont.value.scrollTop;
          
         }
@@ -166,19 +162,22 @@ console.log( dragItemCoords.value.top + 'px');
 </script>
 
 <template>
- <div @mouseup="handleMouseUp" >
+ <div @mouseup="handleMouseUp" @mousemove="handleMouseMove($event)" >
   <div>
     <div ref="boundary"
          class="boundary-box" 
          @mousedown="handleMouseDown($event)" 
-         @mousemove="handleMouseMove($event)"
+       
     >
     <div ref="draggable"
            class="drag-handle"
            :class="{'grabbing': isDragging},{'hint': lastPercentage < '70'}"></div>
     </div>
+    </div>
+    <div>
     <div ref="pagecont" class="page-container" >
-      <component v-for="component in pageComponents" :is="component" ref="pages" :isDragging="isDragging" :activePage="activePage"></component>
+      <component v-for="(component, index) in pageComponents" :is="component" ref="pages" :isDragging="isDragging" :activePage="activePage" :pageName="'page' + index"><div v-if="isDragging"><h2>Title</h2></div>
+      </component>
     </div>
   </div>
 
@@ -193,7 +192,7 @@ console.log( dragItemCoords.value.top + 'px');
   width: 120px;
   height: 50vh;
   pointer-events: none; 
-  border: solid 2px black;
+
 }
 
 .drag-handle{
@@ -226,39 +225,11 @@ console.log( dragItemCoords.value.top + 'px');
   cursor: grabbing;
 }
 
-.page-box{
-  /*aspect-ratio: 16 / 9;*/
-  width:100%;
-  overflow-y:auto;
-  height: 100%;
-  transition: all 0.5s ease-out;
-}
-
 .page-container{
   height:100vh;
   width:100vw;
   overflow:hidden;
   }
 
-.drag-view{
-  margin-top:10px;
-  width:90vw;
-  margin-top:10px;
-  overflow:hidden;
-  margin: 5vw;
-  /*margin-top: 5vw;*/
- /* aspect-ratio: 16 / 9 !important;*/
-}
 
-.fixed-view{
-  height: 100%;
-}
-
-.page-main{
-  width:100%;
-  height:100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 </style>
