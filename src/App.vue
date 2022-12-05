@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref,nextTick, onMounted } from 'vue'
-import Home from './components/Home.vue'
-import Ouioui from './components/Ouioui.vue'
-import Rcadia from './components/Rcadia.vue'
-import Attendance from './components/Attendance.vue'
-import VrUnity from './components/VrUnity.vue'
-import VrUnreal from './components/VrUnreal.vue'
-import FinalProject from './components/FinalProject.vue'
-import HallamChat from './components/HallamChat.vue'
+import Home from './views/Home.vue'
+import Ouioui from './views/Ouioui.vue'
+import Rcadia from './views/Rcadia.vue'
+import Attendance from './views/Attendance.vue'
+import VrUnity from './views/VrUnity.vue'
+import VrUnreal from './views/VrUnreal.vue'
+import FinalProject from './views/FinalProject.vue'
+import HallamChat from './views/HallamChat.vue'
 
 
 
