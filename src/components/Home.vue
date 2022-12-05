@@ -24,9 +24,8 @@ defineExpose({
     <div class="page-contents" v-if="!props.isDragging">
     <v-container>
     <v-row
-        align="center"
         style="height: 50vh;"
-        no-gutters
+        class="pa-2 ma-2"
       >
         <v-col
           cols="12"

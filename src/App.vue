@@ -20,7 +20,7 @@ import HallamChat from './components/HallamChat.vue'
     return num < lower ? lower : num > upper ? upper : num;
   }; 
   
-  const isDragging = ref(false);
+  const isDragging = ref(true);
   const dragItemTop = ref('0px')
   const boundary = ref('');
   const draggable = ref('');

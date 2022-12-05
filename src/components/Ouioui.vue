@@ -81,10 +81,22 @@ defineExpose({
   position:absolute;
   top:0;
   left:0;
-  background: url('https://github.com/nateainsworth/scrolling-home/blob/main/src/assets/Ouioui%20Home.png?raw=true');
+  background: url('https://github.com/nateainsworth/scrolling-home/blob/main/src/assets/Ouioui%20Home.png?raw=true') center;
   background-size: cover;
   z-index:10;
-  filter: brightness(0.6);
+  
+}
+.page-main::after{
+  content:' ';
+  width:100%;
+  height:100%;
+  position:absolute;
+  top:0;
+  left:0;
+background-color:rgba(255,255,255,0.15);
+  background-size: cover;
+  z-index:12;
+  
 }
 
   .page-main{
@@ -102,6 +114,6 @@ defineExpose({
     text-align:left;
     position: relative;
     z-index: 20;
-    color: #ffffff;
+    color: #0c0c0e;
   }
 </style>

@@ -84,7 +84,7 @@ defineExpose({
   background: url('https://github.com/nateainsworth/scrolling-home/blob/main/src/assets/VR%20Hub%20Flow.png?raw=true');
   background-size: cover;
   z-index:10;
-  filter: brightness(0.6);
+  
 }
 
   .page-main{
@@ -102,6 +102,6 @@ defineExpose({
     text-align:left;
     position: relative;
     z-index: 20;
-    color: #ffffff;
+    color: #0c0c0e;
   }
 </style>
