@@ -82,7 +82,10 @@ const createWith = ['Asp.net', 'Signal R', 'MySQL', 'Bootstrap', 'Chart.js'];
             <hr/>
           </v-col>
           <v-col v-for="(text, index) in createWith"
-            cols="2"
+            xs="6"
+            sm="3"
+            lg="2"
+
             class="pa-2"
             :key="index"
           >

@@ -82,7 +82,10 @@ const createWith = ['Vue.js', 'Node.js','Express', 'Axios', 'Heroku', 'Azure Spe
             <hr/>
           </v-col>
           <v-col v-for="(text, index) in createWith"
-            cols="2"
+            xs="6"
+            sm="3"
+            lg="2"
+
             class="pa-2"
             :key="index"
           >
