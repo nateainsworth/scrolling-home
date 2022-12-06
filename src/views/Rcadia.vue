@@ -14,6 +14,9 @@ const page = ref('');
 defineExpose({
  page
 })
+
+const createWith = ['Asp.net', 'Signal R', 'MySQL', 'Bootstrap'];
+
 </script>
 <template>
   <div ref="page" class='page-box' :class="{'drag-view': props.isDragging}" v-if="props.activePage == props.pageName || props.isDragging">
@@ -76,13 +79,20 @@ defineExpose({
             cols="12"
             style="text-align:left;"
           >
-            <h2>Libaries and Plugins</h2>
+            <h2>Created With</h2>
             <hr/>
           </v-col>
-          <v-col
-            cols="12"
-            style="text-align:left;"
+          <v-col v-for="(text, index) in createWith"
+            xs="6"
+            sm="3"
+            lg="2"
+
+            class="pa-2 d-flex" style="flex-direction:column"
+            :key="index"
           >
+            <div class="card pa-2 flex-grow-1 mb-1">
+              <p>{{text}}</p>
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -115,18 +125,18 @@ defineExpose({
   /* aspect-ratio: 16 / 9 !important;*/
   }
 
-.page-main::before{
-  content:' ';
-  width:100%;
-  height:100%;
-  position:absolute;
-  top:0;
-  left:0;
-  background: url('https://github.com/nateainsworth/scrolling-home/blob/main/src/assets/Rcadia%20Login.png?raw=true');
-  background-size: cover;
-  z-index:10;
-  filter: brightness(0.6);
-}
+  .page-main::before{
+    content:' ';
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    background: url('https://github.com/nateainsworth/scrolling-home/blob/main/src/assets/Rcadia%20Login.png?raw=true');
+    background-size: cover;
+    z-index:10;
+    filter: brightness(0.6);
+  }
 
   .page-main{
     position:relative;
@@ -145,4 +155,5 @@ defineExpose({
     z-index: 20;
     color: #ffffff;
   }
+
 </style>

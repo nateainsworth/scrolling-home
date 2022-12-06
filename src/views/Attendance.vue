@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import Gallery from '../components/Gallery.vue'
 
 const props = defineProps({
   isDragging: Boolean,
@@ -12,6 +13,9 @@ const page = ref('');
 defineExpose({
  page
 })
+
+const createWith = [ 'Node.js', 'Vue.js', 'Socket.io', 'Bootstrap', 'Postman', 'Chart.js', 'Cypress', 'Jest','MongoDB','Mongoose','JWT' ];
+
 </script>
 <template>
   <div ref="page" class='page-box' :class="{'drag-view': props.isDragging}" v-if="props.activePage == props.pageName || props.isDragging">
@@ -22,31 +26,74 @@ defineExpose({
       </div>
     </div>
     <div class="page-contents" v-if="!props.isDragging">
-    <v-container>
-    <v-row
-        align="center"
-        style="height: 50vh;"
-        no-gutters
-      >
-        <v-col
-          cols="12"
-          style="text-align:left;"
+      <v-container>
+        <v-row
+            align="center"
+            class="pa-2 ma-2"
         >
-        <h2>SAAD Attendance</h2>
-        <hr/>
-        </v-col>
-        <v-col
-          cols="12"
-          style="text-align:left;"
+          <v-col
+            cols="12"
+            style="text-align:left;"
+          >
+            <h2>SAAD Attendance</h2>
+            <hr/>
+          </v-col>
+          <v-col
+            cols="12"
+            style="text-align:left;"
+          >
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur augue nulla, posuere sed cursus in, gravida porta felis. Vestibulum nec lacinia mi. Cras sollicitudin dolor a orci tristique, id porttitor ligula tincidunt. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec vel placerat turpis. Vestibulum venenatis rutrum bibendum. Aenean vulputate ex ac ornare placerat. Aliquam feugiat nisl sit amet dui dignissim, nec maximus quam tincidunt. Suspendisse blandit felis at mi interdum sodales. Duis sagittis tortor sollicitudin dapibus fringilla. Phasellus molestie leo turpis, et elementum nisl ultrices elementum. Aliquam in lacus quis purus tincidunt finibus quis vitae ex. Proin lacinia ullamcorper arcu, in finibus leo tristique ac. Maecenas et enim in lorem pretium dapibus vitae et tellus. Vestibulum cursus malesuada quam.
+              </p>
+          </v-col>
+        </v-row>
+      </v-container>
+            <v-container>
+        <v-row
+            align="center"
+            class="pa-2 ma-2"
         >
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur augue nulla, posuere sed cursus in, gravida porta felis. Vestibulum nec lacinia mi. Cras sollicitudin dolor a orci tristique, id porttitor ligula tincidunt. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec vel placerat turpis. Vestibulum venenatis rutrum bibendum. Aenean vulputate ex ac ornare placerat. Aliquam feugiat nisl sit amet dui dignissim, nec maximus quam tincidunt. Suspendisse blandit felis at mi interdum sodales. Duis sagittis tortor sollicitudin dapibus fringilla. Phasellus molestie leo turpis, et elementum nisl ultrices elementum. Aliquam in lacus quis purus tincidunt finibus quis vitae ex. Proin lacinia ullamcorper arcu, in finibus leo tristique ac. Maecenas et enim in lorem pretium dapibus vitae et tellus. Vestibulum cursus malesuada quam.
-          </p>
-        </v-col>
-    </v-row>
-    </v-container>
+          <v-col
+            cols="12"
+            style="text-align:left;"
+          >
+            <h2>Screen Shots</h2>
+            <hr/>
+          </v-col>
+          <v-col
+            cols="12"
+            style="text-align:left;"
+          >
+            <Gallery/>
+          </v-col>
+        </v-row>
+      </v-container>
+      
+      <v-container>
+        <v-row
+            align="center"
+            class="pa-2 ma-2"
+        >
+          <v-col
+            cols="12"
+            style="text-align:left;"
+          >
+            <h2>Created With</h2>
+            <hr/>
+          </v-col>
+          <v-col v-for="(text, index) in createWith"
+            cols="2"
+            class="pa-2"
+            :key="index"
+          >
+            <div class="card pa-2">
+              <p>{{text}}</p>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
           
-          </div>
+    </div>
       </div>
 </template>
 <style scoped>
