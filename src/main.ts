@@ -21,6 +21,11 @@ import { fa } from 'vuetify/iconsets/fa'
 
 import '@mdi/font/css/materialdesignicons.css'
 
+//import gsap from 'gsap'
+//import ScrollTrigger from "gsap/ScrollTrigger";
+
+//gsap.registerPlugin(ScrollTrigger);
+
 const vuetify = createVuetify({
   components,
   directives,
@@ -35,8 +40,10 @@ const vuetify = createVuetify({
 })
 
 
-
-createApp(App)
+createApp(App)/*.mixin({
+    created: function () {
+    this.gsap = gsap;
+  }})*/
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(vuetify)
   .mount('#app')

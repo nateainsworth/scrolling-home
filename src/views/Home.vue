@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import gsap from 'gsap'
 
 const props = defineProps({
   isDragging: Boolean,
@@ -8,6 +9,23 @@ const props = defineProps({
 });
 
 const page = ref('');
+
+
+const displayHeading = ref(true);
+
+const beforeEnter = (e) => {
+  e.style.transform = 'translateX(-100vW)'
+  e.style.opacity = 0
+}
+const enter = (e, complete) => {
+  gsap.to(e, {
+    duration: 1,
+    x: 0,
+    opacity: 1,
+    ease: 'bounce.out',
+    onComplete: complete
+  })
+}
 
 defineExpose({
  page
@@ -31,7 +49,14 @@ defineExpose({
           cols="12"
           style="text-align:left;"
         >
-        <h2>Intro</h2>
+          <transition
+            appear
+            @before-enter="beforeEnter"
+            @enter="enter"
+            :css="false"
+          >
+            <h2>Intro</h2>
+          </transition>
         <hr/>
         </v-col>
         <v-col
