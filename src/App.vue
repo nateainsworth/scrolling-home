@@ -8,11 +8,12 @@ import VrUnity from './views/VrUnity.vue'
 import VrUnreal from './views/VrUnreal.vue'
 import FinalProject from './views/FinalProject.vue'
 import HallamChat from './views/HallamChat.vue'
+import TestSlider from './views/TestSlider.vue'
 
 
 
 //,HallamChat
-  const pageComponents = [Home,Rcadia,Attendance,VrUnity,VrUnreal,Ouioui,FinalProject];
+  const pageComponents = [Home,Rcadia,Attendance,VrUnity,VrUnreal,Ouioui,FinalProject,TestSlider];
 
   const pages = ref([]);
   const titles = ref([]);
@@ -175,6 +176,7 @@ import HallamChat from './views/HallamChat.vue'
   align-items: center;
 
 }
+
 .drag-handle:hover{
     background-color:rgba(255,255,255,1);
 }
