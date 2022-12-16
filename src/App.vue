@@ -20,6 +20,7 @@ import TestSlider from './views/TestSlider.vue'
   }; 
   
   const isDragging = ref(true);
+  const menuHover = ref(false);
   const dragItemTop = ref('0px')
   const boundary = ref('');
   const draggable = ref('');
@@ -125,27 +126,28 @@ import TestSlider from './views/TestSlider.vue'
 </script>
 
 <template>
- <div @mouseup="handleMouseUp" @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()" >
-  <div>
-    <div ref="boundary"
-         class="boundary-box" 
-         @mousedown="handleMouseDown($event)"
-    >
-    <div ref="draggable"
-           class="drag-handle"
-           :class="{'grabbing': isDragging},{'hint': lastPercentage < '70'}">
-           <i class="fa-solid fa-bars" style="color:"></i>
-           </div>
-    </div>
+  <div @mouseup="handleMouseUp" @mousemove="handleMouseMove($event)" @mouseleave="handleMouseLeave()" >
+    <div>
+      <div ref="boundary"
+      class="boundary-box" 
+      @mousedown="handleMouseDown($event)"
+      >
+        <div ref="draggable"
+        class="drag-handle"
+        :class="{'grabbing': isDragging},{'hint': lastPercentage < '70'}"
+        >
+          <span class="menu-icon"></span>
+        </div>
+      </div>
     </div>
     <div>
-    <div ref="pagecont" class="page-container" >
-      <component v-for="(component, index) in pageComponents" :is="component" ref="pages" :isDragging="isDragging" :activePage="activePage" :pageName="'page' + index"><div v-if="isDragging"><h2>Portfolio</h2></div>
-      </component>
+      <div ref="pagecont" class="page-container" >
+        <component v-for="(component, index) in pageComponents" :is="component" ref="pages" :isDragging="isDragging" :activePage="activePage" :pageName="'page' + index"><div v-if="isDragging"><h2>Portfolio</h2></div>
+        </component>
+      </div>
     </div>
-  </div>
 
-</div>
+  </div>
 </template>
 
 <style scoped>
@@ -163,7 +165,7 @@ import TestSlider from './views/TestSlider.vue'
   width:40px;
   height:40px;
   border-radius: 50%;
-  background-color:rgba(255,255,255,0.7);
+  background-color:#ffffff;
   top: v-bind('dragItemTop');
   position: absolute;
   cursor: -webkit-grab; 
@@ -172,11 +174,15 @@ import TestSlider from './views/TestSlider.vue'
   display: flex;  
   justify-content: center;
   align-items: center;
-
-}
+  
+  box-shadow: var(--shadow-1);
+  transition: all 0.5s ease-out;
+  transform: scale(0.9);
+  }
 
 .drag-handle:hover{
-    background-color:rgba(255,255,255,1);
+    /*background-color:rgba(255,255,255,1);*/
+    transform: scale(1);
 }
 
 .drag-handle svg{
@@ -207,5 +213,27 @@ import TestSlider from './views/TestSlider.vue'
   overflow:hidden;
   }
 
+.menu-icon::after{
+  font-family: "FontAwesome";
+  font-weight: 900; 
+  content: "\f0c9";
+  color: #000000;
+  font-size: 1.4em;
+  vertical-align: middle;
+  pointer-events: none;
+}
+
+.drag-handle:hover .menu-icon::after{
+  content: "\f07d";
+  pointer-events: none;
+}
+
+.grabbing .menu-icon::after{
+  content: "\f07d";
+  pointer-events: none;
+}
+.menu-icon{
+   pointer-events: none;
+}
 
 </style>
