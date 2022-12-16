@@ -132,7 +132,7 @@ const createWith = ['Asp.net', 'Signal R', 'MySQL', 'Bootstrap'];
     position:absolute;
     top:0;
     left:0;
-    background: url('https://github.com/nateainsworth/scrolling-home/blob/main/src/assets/Rcadia%20Login.png?raw=true');
+    background: url('/src/assets/Rcadia%20Login.png');
     background-size: cover;
     z-index:10;
     filter: brightness(0.6);

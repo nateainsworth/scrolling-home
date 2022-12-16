@@ -131,7 +131,7 @@ const createWith = [ 'Vue.js', 'Node.js', 'Unity 3D', 'Chart.js', 'Blender', 'Bo
   position:absolute;
   top:0;
   left:0;
-  background: url('https://github.com/nateainsworth/scrolling-home/blob/main/src/assets/MagicalForest.png?raw=true');
+  background: url('/src/assets/MagicalForest.png');
   background-size: cover;
 
   z-index:10;

@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { ref , inject} from 'vue'
+import Slide from './Slide.vue'
+
+const props = defineProps({
+  screenShots: [String],
+});
 
 const { page } = inject('refers')
 
@@ -33,17 +38,13 @@ defineExpose({
   scrolling
 })
 
+
+console.log(props.screenShots);
 </script>
 <template>
   <div ref="horizontal" class="this-parent-div-is-necessary horizontal-container">
     <div class="div-sticky-class">
-      <div class="items">
-        <p>Text goes here</p>
-      </div>
-      <div class="items"></div>
-      <div class="items"></div>
-      <div class="items"></div>
-      <div class="items"></div>
+      <Slide v-for="(url, index) in props.screenShots" :key="index" :imageURL="url"/>
     </div>
   </div>
 </template>

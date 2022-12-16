@@ -130,7 +130,7 @@ const createWith = [ 'Node.js', 'Vue.js', 'Socket.io', 'Bootstrap', 'Postman', '
   position:absolute;
   top:0;
   left:0;
-  background: url('https://github.com/nateainsworth/scrolling-home/blob/main/src/assets/Saad%20Analytics.png?raw=true') left;
+  background: url('/src/assets/Saad%20Analytics.png') left;
   background-size: cover;
 
   z-index:10;

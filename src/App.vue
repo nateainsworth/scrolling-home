@@ -174,21 +174,20 @@ import TestSlider from './views/TestSlider.vue'
   display: flex;  
   justify-content: center;
   align-items: center;
-  
   box-shadow: var(--shadow-1);
   transition: all 0.5s ease-out;
   transform: scale(0.9);
   }
 
 .drag-handle:hover{
-    /*background-color:rgba(255,255,255,1);*/
     transform: scale(1);
 }
 
+/*
 .drag-handle svg{
   pointer-events: none;
   color: black;
-}
+}*/
 
 .drag-handle.hint:hover::after{
   content:"\2190  Drag Me";

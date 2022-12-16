@@ -25,6 +25,8 @@ provide('refers', {
 
 const createWith = [ 'Node.js', 'Vue.js', 'Socket.io', 'Bootstrap', 'Postman', 'Chart.js', 'Cypress', 'Jest','MongoDB','Mongoose','JWT' ];
 
+const screenShots = ["url('/src/assets/VR%20Hub%20Flow.png')","url('/src/assets/Ouioui%20Home.png')","url('/src/assets/Rcadia%20Login.png')","url('/src/assets/MagicalForest.png')"]
+
 </script>
 <template>
  <div ref="page" class='page-box' :class="{'drag-view': props.isDragging}" v-if="props.activePage == props.pageName || props.isDragging" @scroll="$refs.gallery.scrolling()" >
@@ -73,7 +75,7 @@ const createWith = [ 'Node.js', 'Vue.js', 'Socket.io', 'Bootstrap', 'Postman', '
         </v-row>
       </v-container>
 
-      <ScrollGallery ref="gallery" />
+      <ScrollGallery ref="gallery" :screenShots="screenShots" />
 
       <v-container>
         <v-row
@@ -105,7 +107,7 @@ const createWith = [ 'Node.js', 'Vue.js', 'Socket.io', 'Bootstrap', 'Postman', '
     </div>
   </div>
 </template>
-<style>
+<style  scoped>
   .page-box{
     /*aspect-ratio: 16 / 9;*/
     width:100%;
@@ -138,7 +140,7 @@ const createWith = [ 'Node.js', 'Vue.js', 'Socket.io', 'Bootstrap', 'Postman', '
     position:absolute;
     top:0;
     left:0;
-    background: url('https://github.com/nateainsworth/scrolling-home/blob/main/src/assets/Saad%20Analytics.png?raw=true') left;
+    background: url('/src/assets/Saad%20Analytics.png') left;
     background-size: cover;
     z-index:10;
     filter: brightness(0.6);
