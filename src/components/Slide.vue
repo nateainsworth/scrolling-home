@@ -3,8 +3,6 @@
     imageURL: String,
   });
 
-  console.log(props.imageURL)
-
 </script>
 <template>
   <div class="items"></div>

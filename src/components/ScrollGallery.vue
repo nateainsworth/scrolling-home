@@ -55,40 +55,15 @@ console.log(props.screenShots);
   position: sticky;
   position: -webkit-sticky;
   top: 0;
-  display: flex;
+  display: inline-flex;
 }
 
 .horizontal-container{
   background-color:green;
   height:300vh;
-  width:calc(500vw + 25px);
+  min-width:100vw;
   transition: all 0.2s ease-out;
   transform: translate(v-bind('leftposition'), 0px);
-}
-
-.items{
-  width:calc(100vw + 8px);
-  height:100vh;
-}
-
-.items:nth-of-type(1){
-  background-color:orange;
-}
-
-.items:nth-of-type(2){
-  background-color:purple;
-}
-
-.items:nth-of-type(3){
-  background-color:red;
-}
-
-.items:nth-of-type(4){
-  background-color:yellow;
-}
-
-.items:nth-of-type(5){
-  background-color:aqua;
 }
 
 </style>
