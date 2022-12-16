@@ -10,8 +10,6 @@ import FinalProject from './views/FinalProject.vue'
 import HallamChat from './views/HallamChat.vue'
 import TestSlider from './views/TestSlider.vue'
 
-
-
 //,HallamChat
   const pageComponents = [Home,Rcadia,Attendance,VrUnity,VrUnreal,Ouioui,FinalProject,TestSlider];
 
@@ -77,52 +75,52 @@ import TestSlider from './views/TestSlider.vue'
 
     }
   }
+
+  const findPositionInsideBound = (e) => {
+    const x = e.clientX - (draggable.value.clientWidth/2);
+    const y = e.clientY - (draggable.value.clientHeight/2); 
     
-      const findPositionInsideBound = (e) => {
-        const x = e.clientX - (draggable.value.clientWidth/2);
-        const y = e.clientY - (draggable.value.clientHeight/2); 
-        
-        return lockToBoundary(x, y);
-      }
+    return lockToBoundary(x, y);
+  }
 
-      const handleMouseDown = async (e) => {
-        e.preventDefault();
-        if (e.target === draggable.value) {
-          isDragging.value = true;  
-          
-          await nextTick (() =>{
-            pagecont.value.scrollTop = lastPercentage.value;
-          });
-          
-        }
-      }
-
-      const handleMouseMove = (e) => {
-        
-        if (isDragging.value) {
-          const position = findPositionInsideBound(e);
-
-          dragItemTop.value = position.y + 'px';
-
-          const percentage =  ( position.y / (boundary.value.clientHeight - draggable.value.clientHeight)) * 100;
-          pagecont.value.scrollTop = (pagecont.value.scrollHeight - pagecont.value.clientHeight) / 100 * percentage;
-          lastPercentage.value = pagecont.value.scrollTop;
-         
-        }
-      }
+  const handleMouseDown = async (e) => {
+    e.preventDefault();
+    if (e.target === draggable.value) {
+      isDragging.value = true;  
       
-      const handleMouseLeave = () => {
-        
-        if (isDragging.value) {     
-          var evt = new MouseEvent("mouseup", () => {
-            bubbles =  true,
-            cancelable = false,
-            view =  window
-          });
-          draggable.dispatchEvent(evt);
-        }
-        
-      }
+      await nextTick (() =>{
+        pagecont.value.scrollTop = lastPercentage.value;
+      });
+      
+    }
+  }
+
+  const handleMouseMove = (e) => {
+    
+    if (isDragging.value) {
+      const position = findPositionInsideBound(e);
+
+      dragItemTop.value = position.y + 'px';
+
+      const percentage =  ( position.y / (boundary.value.clientHeight - draggable.value.clientHeight)) * 100;
+      pagecont.value.scrollTop = (pagecont.value.scrollHeight - pagecont.value.clientHeight) / 100 * percentage;
+      lastPercentage.value = pagecont.value.scrollTop;
+      
+    }
+  }
+  
+  const handleMouseLeave = () => {
+    
+    if (isDragging.value) {     
+      var evt = new MouseEvent("mouseup", () => {
+        bubbles =  true,
+        cancelable = false,
+        view =  window
+      });
+      draggable.dispatchEvent(evt);
+    }
+    
+  }
     
 </script>
 

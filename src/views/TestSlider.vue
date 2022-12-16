@@ -27,7 +27,7 @@ const createWith = [ 'Node.js', 'Vue.js', 'Socket.io', 'Bootstrap', 'Postman', '
 
 </script>
 <template>
- <div ref="page" class='page-box' :class="{'drag-view': props.isDragging}" v-if="props.activePage == props.pageName || props.isDragging" @scroll="$refs.gallery.scrolling()" ><!-- @scroll="scrolling" -->
+ <div ref="page" class='page-box' :class="{'drag-view': props.isDragging}" v-if="props.activePage == props.pageName || props.isDragging" @scroll="$refs.gallery.scrolling()" >
     <div class='page-main'>
       <div class="title-area">
         <h2>Test Slider</h2>
@@ -72,22 +72,9 @@ const createWith = [ 'Node.js', 'Vue.js', 'Socket.io', 'Bootstrap', 'Postman', '
           </v-col>
         </v-row>
       </v-container>
-      <ScrollGallery ref="gallery" />
-<!-- :outerPage="page"   <div ref="horizontal" class="this-parent-div-is-necessary horizontal-container">
-        <div class="div-sticky-class">
-          <div class="items">
-            <p>Text goes here</p>
-          </div>
-          <div class="items"></div>
-          <div class="items"></div>
-          <div class="items"></div>
-          <div class="items"></div>
-        </div>
-      </div>
-      -->
-      
 
-      
+      <ScrollGallery ref="gallery" />
+
       <v-container>
         <v-row
             align="center"
@@ -134,29 +121,28 @@ const createWith = [ 'Node.js', 'Vue.js', 'Socket.io', 'Bootstrap', 'Postman', '
     height:100vh;
     width:100vw;
     overflow:hidden;
-    }
+  }
 
   .drag-view{
     width:90vw;
     overflow:hidden;
     margin: 5vw;
     /*margin-top: 5vw;*/
-  /* aspect-ratio: 16 / 9 !important;*/
+    /* aspect-ratio: 16 / 9 !important;*/
   }
 
-.page-main::before{
-  content:' ';
-  width:100%;
-  height:100%;
-  position:absolute;
-  top:0;
-  left:0;
-  background: url('https://github.com/nateainsworth/scrolling-home/blob/main/src/assets/Saad%20Analytics.png?raw=true') left;
-  background-size: cover;
-
-  z-index:10;
-  filter: brightness(0.6);
-}
+  .page-main::before{
+    content:' ';
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    background: url('https://github.com/nateainsworth/scrolling-home/blob/main/src/assets/Saad%20Analytics.png?raw=true') left;
+    background-size: cover;
+    z-index:10;
+    filter: brightness(0.6);
+  }
 
   .page-main{
     position:relative;
@@ -176,11 +162,11 @@ const createWith = [ 'Node.js', 'Vue.js', 'Socket.io', 'Bootstrap', 'Postman', '
     color: #ffffff;
   }
 
-.page{
-  overflow-y:scroll;
-  overflow-x:hidden;
-  height:100vh;
-  width:100vw;
-}
+  .page{
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height:100vh;
+    width:100vw;
+  }
 
 </style>

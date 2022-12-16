@@ -10,25 +10,14 @@ const leftposition = ref('0px');
 const lock = (num, lower = 0, upper) => {
   return num < lower ? lower : num > upper ? upper : num;
 }; 
-  
 
 const scrolling = () =>{
-  console.log('scrolling called.')
   
-  //console.log('scrolling' + page.value.scrollTop + ' : ' + horizontal.value.clientHeight);
-  //horizontal.value.offsetTop
   if(page.value.scrollTop > horizontal.value.offsetTop && page.value.scrollTop < (horizontal.value.clientHeight + horizontal.value.offsetTop - window.innerHeight)){
-    //console.log('inside' , (page.value.scrollTop - horizontal.value.offsetTop));
-     
-
 
     const percentage =  ( (page.value.scrollTop - horizontal.value.offsetTop) / (horizontal.value.clientHeight - window.innerHeight)) * 100;
     console.log((Math.round(percentage * 10) / 10));
     
-    //const boundaryPos = horizontal.value.getBoundingClientRect();
-    //const maxWidth = boundaryPos.width - horizontal.value.clientWidth - window.innerHeight;
-    // x :  lock(x - boundaryPos.x, 0, maxWidth), 
-
     horizontal.value.scrollLeft = horizontal.value.scrollWidth / 100 *  (Math.round(percentage * 10) / 10)
     console.log(horizontal.value.scrollWidth / 100 * percentage );
     leftposition.value = '-' + ((horizontal.value.scrollWidth - window.innerWidth) / 100 * percentage) + 'px';
