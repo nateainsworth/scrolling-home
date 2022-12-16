@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
-import Gallery from '../components/Gallery.vue'
+import { ref, onMounted,provide } from 'vue'
+import ScrollGallery from '../components/ScrollGallery.vue'
 
 const props = defineProps({
   isDragging: Boolean,
@@ -9,57 +9,25 @@ const props = defineProps({
 });
 
 const page = ref('');
+const gallery = ref('');
 const horizontal = ref('');
 const hPosition = ref(0);
 
+//provides ref to parent
 defineExpose({
- page
+  page
 })
+
+//provides page to child
+provide('refers', {
+  page,
+});
 
 const createWith = [ 'Node.js', 'Vue.js', 'Socket.io', 'Bootstrap', 'Postman', 'Chart.js', 'Cypress', 'Jest','MongoDB','Mongoose','JWT' ];
 
-const leftposition = ref('0px');
-
-onMounted (() =>{
-  hPosition.value = horizontal.value.offsetTop;
-});
-
-const lock = (num, lower = 0, upper) => {
-  return num < lower ? lower : num > upper ? upper : num;
-}; 
-  
-
-
-const scrolling = () =>{
-  //console.log('scrolling' + page.value.scrollTop + ' : ' + horizontal.value.clientHeight);
-  //horizontal.value.offsetTop
-  if(page.value.scrollTop > horizontal.value.offsetTop && page.value.scrollTop < (horizontal.value.clientHeight + horizontal.value.offsetTop - window.innerHeight)){
-    //console.log('inside' , (page.value.scrollTop - horizontal.value.offsetTop));
-     
-
-
-    const percentage =  ( (page.value.scrollTop - horizontal.value.offsetTop) / (horizontal.value.clientHeight - window.innerHeight)) * 100;
-    console.log((Math.round(percentage * 10) / 10));
-    
-    //const boundaryPos = horizontal.value.getBoundingClientRect();
-    //const maxWidth = boundaryPos.width - horizontal.value.clientWidth - window.innerHeight;
-    // x :  lock(x - boundaryPos.x, 0, maxWidth), 
-
-    horizontal.value.scrollLeft = horizontal.value.scrollWidth / 100 *  (Math.round(percentage * 10) / 10)
-    console.log(horizontal.value.scrollWidth / 100 * percentage );
-    leftposition.value = '-' + ((horizontal.value.scrollWidth - window.innerWidth) / 100 * percentage) + 'px';
-
-  }else if(page.value.scrollTop > (horizontal.value.clientHeight + horizontal.value.offsetTop - window.innerHeight)){
-    leftposition.value = '-' + ((horizontal.value.scrollWidth - window.innerWidth) / 100 * 100) + 'px';
-  }else if(page.value.scrollTop < horizontal.value.offsetTop){
-    leftposition.value = '-' + ((horizontal.value.scrollWidth - window.innerWidth) / 100 * 0) + 'px';
-  }
-}
-
-
 </script>
 <template>
- <div ref="page" class='page-box' :class="{'drag-view': props.isDragging}" v-if="props.activePage == props.pageName || props.isDragging" @scroll="scrolling">
+ <div ref="page" class='page-box' :class="{'drag-view': props.isDragging}" v-if="props.activePage == props.pageName || props.isDragging" @scroll="$refs.gallery.scrolling()" ><!-- @scroll="scrolling" -->
     <div class='page-main'>
       <div class="title-area">
         <h2>Test Slider</h2>
@@ -90,7 +58,22 @@ const scrolling = () =>{
         </v-row>
       </v-container>
 
-      <div ref="horizontal" class="this-parent-div-is-necessary horizontal-container">
+      <v-container>
+        <v-row
+            align="center"
+            class="pa-2 ma-2"
+        >
+          <v-col
+            cols="12"
+            style="text-align:left;"
+          >
+            <h2>Screen Shots</h2>
+            <hr/>
+          </v-col>
+        </v-row>
+      </v-container>
+      <ScrollGallery ref="gallery" />
+<!-- :outerPage="page"   <div ref="horizontal" class="this-parent-div-is-necessary horizontal-container">
         <div class="div-sticky-class">
           <div class="items">
             <p>Text goes here</p>
@@ -101,6 +84,10 @@ const scrolling = () =>{
           <div class="items"></div>
         </div>
       </div>
+      -->
+      
+
+      
       <v-container>
         <v-row
             align="center"
@@ -110,16 +97,20 @@ const scrolling = () =>{
             cols="12"
             style="text-align:left;"
           >
-            <h2>SAAD Attendance</h2>
+            <h2>Created With</h2>
             <hr/>
           </v-col>
-          <v-col
-            cols="12"
-            style="text-align:left;"
+          <v-col v-for="(text, index) in createWith"
+            xs="6"
+            sm="3"
+            lg="2"
+
+            class="pa-2"
+            :key="index"
           >
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur augue nulla, posuere sed cursus in, gravida porta felis. Vestibulum nec lacinia mi. Cras sollicitudin dolor a orci tristique, id porttitor ligula tincidunt. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec vel placerat turpis. Vestibulum venenatis rutrum bibendum. Aenean vulputate ex ac ornare placerat. Aliquam feugiat nisl sit amet dui dignissim, nec maximus quam tincidunt. Suspendisse blandit felis at mi interdum sodales. Duis sagittis tortor sollicitudin dapibus fringilla. Phasellus molestie leo turpis, et elementum nisl ultrices elementum. Aliquam in lacus quis purus tincidunt finibus quis vitae ex. Proin lacinia ullamcorper arcu, in finibus leo tristique ac. Maecenas et enim in lorem pretium dapibus vitae et tellus. Vestibulum cursus malesuada quam.
-              </p>
+            <div class="card pa-2">
+              <p>{{text}}</p>
+            </div>
           </v-col>
         </v-row>
       </v-container>
@@ -190,46 +181,6 @@ const scrolling = () =>{
   overflow-x:hidden;
   height:100vh;
   width:100vw;
-}
-
-.div-sticky-class{
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0;
-  display: flex;
-}
-
-.horizontal-container{
-  background-color:green;
-  height:300vh;
-  width:calc(500vw + 25px);
-  transition: all 0.2s ease-out;
-  transform: translate(v-bind('leftposition'), 0px);
-}
-
-.items{
-  width:calc(100vw + 8px);
-  height:100vh;
-}
-
-.items:nth-of-type(1){
-  background-color:orange;
-}
-
-.items:nth-of-type(2){
-  background-color:purple;
-}
-
-.items:nth-of-type(3){
-  background-color:red;
-}
-
-.items:nth-of-type(4){
-  background-color:yellow;
-}
-
-.items:nth-of-type(5){
-  background-color:aqua;
 }
 
 </style>

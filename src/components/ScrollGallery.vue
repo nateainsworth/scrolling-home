@@ -1,0 +1,104 @@
+<script setup lang="ts">
+import { ref , inject} from 'vue'
+
+const { page } = inject('refers')
+
+const horizontal = ref('');
+const hPosition = ref(0);
+const leftposition = ref('0px');
+
+const lock = (num, lower = 0, upper) => {
+  return num < lower ? lower : num > upper ? upper : num;
+}; 
+  
+
+const scrolling = () =>{
+  console.log('scrolling called.')
+  
+  //console.log('scrolling' + page.value.scrollTop + ' : ' + horizontal.value.clientHeight);
+  //horizontal.value.offsetTop
+  if(page.value.scrollTop > horizontal.value.offsetTop && page.value.scrollTop < (horizontal.value.clientHeight + horizontal.value.offsetTop - window.innerHeight)){
+    //console.log('inside' , (page.value.scrollTop - horizontal.value.offsetTop));
+     
+
+
+    const percentage =  ( (page.value.scrollTop - horizontal.value.offsetTop) / (horizontal.value.clientHeight - window.innerHeight)) * 100;
+    console.log((Math.round(percentage * 10) / 10));
+    
+    //const boundaryPos = horizontal.value.getBoundingClientRect();
+    //const maxWidth = boundaryPos.width - horizontal.value.clientWidth - window.innerHeight;
+    // x :  lock(x - boundaryPos.x, 0, maxWidth), 
+
+    horizontal.value.scrollLeft = horizontal.value.scrollWidth / 100 *  (Math.round(percentage * 10) / 10)
+    console.log(horizontal.value.scrollWidth / 100 * percentage );
+    leftposition.value = '-' + ((horizontal.value.scrollWidth - window.innerWidth) / 100 * percentage) + 'px';
+
+  }else if(page.value.scrollTop > (horizontal.value.clientHeight + horizontal.value.offsetTop - window.innerHeight)){
+    leftposition.value = '-' + ((horizontal.value.scrollWidth - window.innerWidth) / 100 * 100) + 'px';
+  }else if(page.value.scrollTop < horizontal.value.offsetTop){
+    leftposition.value = '-' + ((horizontal.value.scrollWidth - window.innerWidth) / 100 * 0) + 'px';
+  }
+}
+
+defineExpose({
+  scrolling
+})
+
+</script>
+<template>
+  <div ref="horizontal" class="this-parent-div-is-necessary horizontal-container">
+    <div class="div-sticky-class">
+      <div class="items">
+        <p>Text goes here</p>
+      </div>
+      <div class="items"></div>
+      <div class="items"></div>
+      <div class="items"></div>
+      <div class="items"></div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+
+.div-sticky-class{
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  display: flex;
+}
+
+.horizontal-container{
+  background-color:green;
+  height:300vh;
+  width:calc(500vw + 25px);
+  transition: all 0.2s ease-out;
+  transform: translate(v-bind('leftposition'), 0px);
+}
+
+.items{
+  width:calc(100vw + 8px);
+  height:100vh;
+}
+
+.items:nth-of-type(1){
+  background-color:orange;
+}
+
+.items:nth-of-type(2){
+  background-color:purple;
+}
+
+.items:nth-of-type(3){
+  background-color:red;
+}
+
+.items:nth-of-type(4){
+  background-color:yellow;
+}
+
+.items:nth-of-type(5){
+  background-color:aqua;
+}
+
+</style>
