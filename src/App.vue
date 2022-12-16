@@ -176,11 +176,13 @@ import TestSlider from './views/TestSlider.vue'
   align-items: center;
   box-shadow: var(--shadow-1);
   transition: all 0.5s ease-out;
-  transform: scale(0.9);
+  /*transform: scale(0.9);*/
   }
 
 .drag-handle:hover{
-    transform: scale(1);
+    /*transform: scale(1);*/
+    width:50px;
+  height:50px;
 }
 
 /*
