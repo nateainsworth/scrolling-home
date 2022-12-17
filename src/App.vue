@@ -39,6 +39,7 @@ import TestSlider from './views/TestSlider.vue'
       };
   }
 
+//TODO: Consider use of composables
   const handleMouseUp = () => {
     if (isDragging.value) {
       let jumpToPage = 0;
@@ -176,20 +177,13 @@ import TestSlider from './views/TestSlider.vue'
   align-items: center;
   box-shadow: var(--shadow-1);
   transition: all 0.5s ease-out;
-  /*transform: scale(0.9);*/
-  }
-
-.drag-handle:hover{
-    /*transform: scale(1);*/
-    width:50px;
-  height:50px;
 }
 
-/*
-.drag-handle svg{
-  pointer-events: none;
-  color: black;
-}*/
+.drag-handle:hover{
+  width:45px;
+  height:45px;
+}
+
 
 .drag-handle.hint:hover::after{
   content:"\2190  Drag Me";
